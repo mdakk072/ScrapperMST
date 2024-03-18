@@ -1,23 +1,54 @@
+
 {% extends 'base.html' %}
 
 {% block title %}ChkounDone: Account{% endblock %}
 
+{% block styles %}
+
+<style>
+    .background-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url("{{ url_for('static', filename='background/bg5.webp') }}") no-repeat center center fixed;
+        background-size: cover;
+        filter: blur(8px);
+        z-index: -10; /* Lower the z-index even further if necessary */
+    }
+    .selectable-image:hover {
+        transform: scale(1.05);
+        border-color: #007bff; /* Or any other color */
+    }
+    
+    .modal-content {
+        border-radius: .5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    }
+
+ 
+    
+</style>
+{% endblock %}
 {% block content %}
+<div class="background-image"></div>
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-4">
-            <div class="card text-center">
-                <img src="{{ url_for('static', filename='profile_pics/' + user.profile_image) }}" id="currentProfileImage" class="card-img-top img-fluid rounded-circle mt-3" style="width: 150px; height: 150px; margin:auto;">
+            <div class="card text-center bg-transparent-black-75 border-0 mb-2">
+                <img src="{{ url_for('static', filename='profile_pics/' + user.profile_image) }}" id="currentProfileImage" class="card-img-top img-fluid rounded-circle mt-3" style="width: 150px; height: 150px; margin:auto; border: 3px solid white;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ user.username }}</h5>
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changeProfileImageModal">
+                    <h5 class="card-title text-white">{{ user.username }}</h5>
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#changeProfileImageModal">
                         <i class="bi bi-pencil-square"></i> Change Profile Picture
                     </button>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <form action="{{ url_for('account') }}" method="POST" id="accountForm">
+        <div class="col-md-8 ">
+            <form action="{{ url_for('account') }}" method="POST" id="accountForm" class="bg-transparent-black-75 p-4 rounded shadow">
                 {{ form.hidden_tag() }}
                 <div class="mb-3">
                     {{ form.username.label(class="form-label") }}
@@ -37,7 +68,7 @@
                 </div>
                 {{ form.profile_image(class="d-none") }}
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-success">Update Account</button>
+                    <button type="submit" class="btn btn-primary">Update Account</button>
                 </div>
             </form>
         </div>
@@ -46,27 +77,36 @@
 
 <!-- Modal for changing profile image -->
 <div class="modal fade" id="changeProfileImageModal" tabindex="-1" aria-labelledby="changeProfileImageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content bg-transparent-black-75">
             <div class="modal-header">
-                <h5 class="modal-title" id="changeProfileImageModalLabel">Select Profile Picture</h5>
+                <h5 class="modal-title" id="changeProfileImageModalLabel">
+                    <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                    Select Profile Picture
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="d-flex flex-wrap justify-content-center">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
                     {% for image in form.profile_image.choices %}
-                    <div class="p-2">
-                        <img src="{{ url_for('static', filename='profile_pics/' + image[0]) }}" alt="Profile Image" class="selectable-image img-thumbnail" style="width: 100px; height: 100px; cursor: pointer;" data-image-name="{{ image[0] }}">
+                    <div class="col">
+                        <div class="card h-100 border-0">
+                            <img src="{{ url_for('static', filename='profile_pics/' + image[0]) }}" alt="Profile Image" class="selectable-image card-img-top img-thumbnail" style="cursor: pointer; transition: transform .2s;" data-image-name="{{ image[0] }}">
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg"></i> Close
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 {% endblock %}
 

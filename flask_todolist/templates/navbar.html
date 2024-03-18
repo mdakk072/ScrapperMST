@@ -1,4 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light  m-2 rounded shadow bg-transparent-white">
+{%block styles%}
+<style>
+    @keyframes slideInFromTop {
+        0% {
+            transform: translateY(-100%); /* Start from above the view */
+        }
+        100% {
+            transform: translateY(0); /* End at the current position */
+        }
+    }
+    
+    .navbar {
+        animation: slideInFromTop 0.5s ease-in-out; /* Apply the animation */
+    }
+</style>
+{%endblock%}    
+<nav class="navbar navbar-expand-lg  m-2 rounded shadow bg-transparent-white-60">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('home') }}">
             <img src="{{ url_for('static', filename='logo.webp') }}" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;" alt="Logo">ChkounDone

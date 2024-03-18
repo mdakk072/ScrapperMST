@@ -2,61 +2,71 @@
 
 {% block title %}ChkounDone: Sign Up{% endblock %}
 
-{% block content %}
-<div class="container my-4">
-    <h2 class="mb-3">Sign Up</h2>
-    <form action="{{ url_for('signup') }}" method="post">
-        {{ form.hidden_tag() }}
-        <div class="mb-3">
-            {{ form.username.label(class="form-label") }}
-            {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
-            {% for error in form.username.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
-            {% endfor %}
-        </div>
-        <div class="mb-3">
-            {{ form.email.label(class="form-label") }}
-            {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
-            {% for error in form.email.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
-            {% endfor %}
-        </div>
-        <!-- Add after the Email field -->
-        <div class="mb-3">
-            {{ form.full_name.label(class="form-label") }}
-            {{ form.full_name(class="form-control" + (" is-invalid" if form.full_name.errors else "")) }}
-            {% for error in form.full_name.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
-            {% endfor %}
-        </div>
-        <div class="mb-3">
-            {{ form.bio.label(class="form-label") }}
-            {{ form.bio(class="form-control" + (" is-invalid" if form.bio.errors else "")) }}
-            {% for error in form.bio.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
-            {% endfor %}
-        </div>
+{% block styles %}
+{{ super() }}
+<style>
+    .background-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url("{{ url_for('static', filename='background/bg4.webp') }}") no-repeat center center fixed; 
+        background-size: cover;
+        filter: blur(8px);
+        z-index: -1;
+    }
+    .signup-container {
+        position: relative;
+        z-index: 10;
+        padding: 2rem;
+        margin-top: 2rem;
+        border-radius: 15px;
+    }
+    .form-icon {
+        width: 24px;
+    }
+</style>
+{% endblock %}
 
-        <div class="mb-3">
-            {{ form.password.label(class="form-label") }}
-            {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else "")) }}
-            {% for error in form.password.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
-            {% endfor %}
+{% block content %}
+<div class="background-image"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 signup-container bg-transparent-white-65">
+            <h2 class="text-center mb-4">Sign Up</h2>
+            <form action="{{ url_for('signup') }}" method="post">
+                {{ form.hidden_tag() }}
+                
+                {% macro render_field_with_icon(field, icon) %}
+                <div class="mb-3 row">
+                    <label for="{{ field.id }}" class="col-sm-3 col-form-label text-end">
+                        <i class="bi {{ icon }}"></i>
+                    </label>
+                    <div class="col-sm-9">
+                        {{ field(class="form-control" + (" is-invalid" if field.errors else ""), placeholder=field.label.text) }}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endmacro %}
+                
+                {{ render_field_with_icon(form.username, "bi-person-fill") }}
+                {{ render_field_with_icon(form.email, "bi-envelope-fill") }}
+                {{ render_field_with_icon(form.full_name, "bi-card-text") }}
+                {{ render_field_with_icon(form.bio, "bi-pencil-fill") }}
+                {{ render_field_with_icon(form.password, "bi-lock-fill") }}
+                {{ render_field_with_icon(form.confirm_password, "bi-lock-fill") }}
+
+                <div class="d-grid gap-2">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="{{ url_for('login') }}" class="link-primary">Login here</a></p>
+            </div>
         </div>
-        <div class="mb-3">
-            {{ form.confirm_password.label(class="form-label") }}
-            {{ form.confirm_password(class="form-control" + (" is-invalid" if form.confirm_password.errors else "")) }}
-            {% for error in form.confirm_password.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
-            {% endfor %}
-        </div>
-        <div class="d-grid gap-2">
-            {{ form.submit(class="btn btn-primary") }}
-        </div>
-    </form>
-    <div class="text-center mt-3">
-        <p>Already have an account? <a href="{{ url_for('login') }}" class="link-primary">Login here</a></p>
     </div>
 </div>
 {% endblock %}

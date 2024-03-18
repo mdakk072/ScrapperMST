@@ -4,54 +4,49 @@
 {% block styles %}
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <style>
-    .background-slideshow, .background-slideshow::before {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-size: cover;
-        background-position: center;
-        filter: blur(8px);
-        z-index: -1;
-        transition: opacity 1s ease-in-out;
+    @keyframes blurAnimation {
+        0% { filter: blur(16px); }
+        25% { filter: blur(32px); }
+        50% { filter: blur(48px); }
+        75% { filter: blur(32px); }
+        100% { filter: blur(16px); }
     }
     
-    .background-slideshow::before {
+
+    body::before {
         content: '';
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: inherit;
-        z-index: -2;
-    }
-    
-
-    /* Overlay with a dark semi-transparent background */
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-color: rgba(0, 0, 0, 0.5); /* Adjust transparency as needed */
+        background: url("{{ url_for('static', filename='background/bg3.webp') }}") no-repeat center center fixed; 
+        background-size: cover;
+        filter: blur(10px);
         z-index: -1;
+        animation: blurAnimation 1s ease-out normal forwards;   
     }
 
-    /* Ensure content is visually on top of the overlay */
+    body {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
     .content-container {
         position: relative;
-        z-index: 1;
+        z-index: 2; /* Ensures content is above the blurred background */
     }
+
+    .text-shadow {
+        text-shadow:
+            3px 3px 3px rgba(0, 0, 0, 0.6),
+            -1px -1px 2px rgba(255, 255, 255, 0.1); /* Adding a subtle light shadow for depth */
+        color: white; /* Keeps text color white for high contrast */
+    }
+    
 </style>
 {% endblock %}
-
 {% block content %}
-<!-- Background slideshow and overlay -->
-<div class="background-slideshow"></div>
-<div class="overlay"></div>
+
 <div class="container py-5 content-container">
     <div class="text-center mb-5 text-shadow">
         <h1 class="display-4 fw-bold text-white">Welcome to ChkounDone</h1>
@@ -99,43 +94,11 @@
 
 
 {% endblock %}
+
 {% block scripts %}
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
     AOS.init();
-
-    const basePath = '{{ url_for("static", filename="") }}';
-    const backgroundImages = {{ background_images | tojson | safe }};
-    let currentBgIndex = 0;
-    const bgSlideshow = document.querySelector('.background-slideshow');
-
-    function changeBackground() {
-        const nextBgIndex = (currentBgIndex + 1) % backgroundImages.length;
-        const nextImageUrl = basePath + backgroundImages[nextBgIndex];
-
-        // Set the next image on the ::before pseudo-element
-        bgSlideshow.style.setProperty('--next-image', `url("${nextImageUrl}")`);
-
-        // Fade out the current image to show the next
-        bgSlideshow.style.opacity = '0';
-
-        setTimeout(() => {
-            // After the fade-out, set the next image as the main background
-            const imageUrl = basePath + backgroundImages[currentBgIndex];
-            bgSlideshow.style.backgroundImage = `url("${imageUrl}")`;
-
-            // Reset opacity to fade back in
-            bgSlideshow.style.opacity = '1';
-
-            // Prepare for next transition
-            currentBgIndex = nextBgIndex;
-
-            // Recursive call to change to the next background after some time
-            setTimeout(changeBackground, 5000); // Change image every 5 seconds
-        }, 700); // Fade transition time
-    }
-
-    changeBackground();
 </script>
-
 {% endblock %}
+```

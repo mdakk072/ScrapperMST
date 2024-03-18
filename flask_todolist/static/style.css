@@ -1,17 +1,43 @@
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
+/* Opacity classes for white background */
+.bg-transparent-white-10 { background-color: rgba(255, 255, 255, 0.1); color: black; }
+.bg-transparent-white-15 { background-color: rgba(255, 255, 255, 0.15); color: black; }
+.bg-transparent-white-20 { background-color: rgba(255, 255, 255, 0.2); color: black; }
+.bg-transparent-white-25 { background-color: rgba(255, 255, 255, 0.25); color: black; }
+.bg-transparent-white-30 { background-color: rgba(255, 255, 255, 0.3); color: black; }
+.bg-transparent-white-35 { background-color: rgba(255, 255, 255, 0.35); color: black; }
+.bg-transparent-white-40 { background-color: rgba(255, 255, 255, 0.4); color: black; }
+.bg-transparent-white-45 { background-color: rgba(255, 255, 255, 0.45); color: black; }
+.bg-transparent-white-50 { background-color: rgba(255, 255, 255, 0.5); color: black; }
+.bg-transparent-white    { background-color: rgba(255, 255, 255, 0.5); color: black; }
+.bg-transparent-white-55 { background-color: rgba(255, 255, 255, 0.55); color: black; }
+.bg-transparent-white-60 { background-color: rgba(255, 255, 255, 0.6); color: black; }
+.bg-transparent-white-65 { background-color: rgba(255, 255, 255, 0.65); color: black; }
+.bg-transparent-white-70 { background-color: rgba(255, 255, 255, 0.7); color: black; }
+.bg-transparent-white-75 { background-color: rgba(255, 255, 255, 0.75); color: black; }
+.bg-transparent-white-80 { background-color: rgba(255, 255, 255, 0.8); color: black; }
+.bg-transparent-white-85 { background-color: rgba(255, 255, 255, 0.85); color: black; }
+.bg-transparent-white-90 { background-color: rgba(255, 255, 255, 0.9); color: black; }
+.bg-transparent-white-95 { background-color: rgba(255, 255, 255, 0.95); color: black; }
+.bg-transparent-white-100 { background-color: rgba(255, 255, 255, 1); color: black; }
 
-.navbar {
-    animation: slideIn 0.5s ease-in-out;
-}.bg-transparent-white {
-    background-color: rgba(255, 255, 255, 0.65); /* White with 80% opacity */
-}
-.bg-transparent-black {
-    background-color: rgba(0, 0, 0, 0.8); /* Black with 80% opacity */
-}
+/* Opacity classes for black background */
+.bg-transparent-black-10 { background-color: rgba(0, 0, 0, 0.1); color: white; }
+.bg-transparent-black-15 { background-color: rgba(0, 0, 0, 0.15); color: white; }
+.bg-transparent-black-20 { background-color: rgba(0, 0, 0, 0.2); color: white; }
+.bg-transparent-black-25 { background-color: rgba(0, 0, 0, 0.25); color: white; }
+.bg-transparent-black-30 { background-color: rgba(0, 0, 0, 0.3); color: white; }
+.bg-transparent-black-35 { background-color: rgba(0, 0, 0, 0.35); color: white; }
+.bg-transparent-black-40 { background-color: rgba(0, 0, 0, 0.4); color: white; }
+.bg-transparent-black-45 { background-color: rgba(0, 0, 0, 0.45); color: white; }
+.bg-transparent-black    { background-color: rgba(0, 0, 0, 0.5); color: white; }
+.bg-transparent-black-50 { background-color: rgba(0, 0, 0, 0.5); color: white; }
+.bg-transparent-black-55 { background-color: rgba(0, 0, 0, 0.55); color: white; }
+.bg-transparent-black-60 { background-color: rgba(0, 0, 0, 0.6); color: white; }
+.bg-transparent-black-65 { background-color: rgba(0, 0, 0, 0.65); color: white; }
+.bg-transparent-black-70 { background-color: rgba(0, 0, 0, 0.7); color: white; }
+.bg-transparent-black-75 { background-color: rgba(0, 0, 0, 0.75); color: white; }
+.bg-transparent-black-80 { background-color: rgba(0, 0, 0, 0.8); color: white; }
+.bg-transparent-black-85 { background-color: rgba(0, 0, 0, 0.85); color: white; }
+.bg-transparent-black-90 { background-color: rgba(0, 0, 0, 0.9); color: white; }
+.bg-transparent-black-95 { background-color: rgba(0, 0, 0, 0.95); color: white; }
+.bg-transparent-black-100 { background-color: rgba(0, 0, 0, 1); color: white; }

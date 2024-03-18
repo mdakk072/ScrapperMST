@@ -5,64 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}ChkounDone{% endblock %}</title>
     <link rel="icon" href="{{ url_for('static', filename='icon.webp') }}" type="image/webp">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block styles %}{% endblock %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Updated to use style.css with url_for -->
-    {% block styles %}{% endblock %} <!-- Block to override with page-specific styles -->
+    <style>
+        :root {
+            --font-family: 'Nunito Sans', sans-serif;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --footer-height: 60px; /* Adjust as needed */
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: var(--font-family);
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        main {
+            flex: 1;
+            padding-top: 20px; /* Space for navbar */
+            padding-bottom: var(--footer-height); /* Space for footer */
+        }
+
+ 
+
+  
+    </style>
 </head>
 <body>
     {% include 'navbar.html' %}
     
-    <!-- Flash messages -->
     <div class="container mt-3">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} d-flex align-items-center" role="alert">
-                        <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" role="img" aria-label="Warning:"></i>
-                        <div>
-                            {{ message }}
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
-            <div id="toast-container">
-                <!-- Toasts will be added here -->
-            </div>
-        </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% for category, message in messages %}
-                        var toastHtml = `
-                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
-                                <div class="toast-header">
-                                    <strong class="me-auto">Message</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                                </div>
-                                <div class="toast-body">
-                                    ${"{{ message|safe }}"}
-                                </div>
-                            </div>`;
-                        var container = document.getElementById('toast-container');
-                        container.insertAdjacentHTML('beforeend', toastHtml);
-                        var toastElList = [].slice.call(container.querySelectorAll('.toast'));
-                        var toastList = toastElList.map(function(toastEl) {
-                            return new bootstrap.Toast(toastEl).show();
-                        });
-                    {% endfor %}
-                {% endwith %}
-            });
-        </script>
-                
-        {% endif %}
-    {% endwith %}
+        {% include 'toaster_flash_messages.html'%}
     </div>
 
     <main role="main" class="container my-3">
@@ -73,8 +54,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="{{ url_for('static', filename='app.js') }}"></script> <!-- Use url_for for including app.js -->
-    {% block scripts %}{% endblock %} <!-- Block to override with page-specific scripts -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    {% block scripts %}{% endblock %}
 </body>
-
 </html>

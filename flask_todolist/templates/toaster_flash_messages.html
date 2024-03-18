@@ -1,0 +1,53 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
+<div id="toast-container">
+    <!-- Toasts will be added here -->
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            // Determine toast color based on category
+            var toastClass = '';
+            switch ("{{ category }}") {
+                case 'success':
+                    toastClass = 'bg-success text-white';
+                    break;
+                case 'danger':
+                    toastClass = 'bg-danger text-white';
+                    break;
+                case 'warning':
+                    toastClass = 'bg-warning text-dark';
+                    break;
+                case 'info':
+                    toastClass = 'bg-info text-white';
+                    break;
+                default:
+                    toastClass = 'bg-primary text-white';
+            }
+
+            var toastHtml = `
+                <div class="toast ${toastClass}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+                    <div class="toast-header ${toastClass}">
+                        <strong class="me-auto">Message</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${"{{ message|safe }}"}
+                    </div>
+                </div>`;
+            var container = document.getElementById('toast-container');
+            container.insertAdjacentHTML('beforeend', toastHtml);
+            var toastElList = [].slice.call(container.querySelectorAll('.toast'));
+            var toastList = toastElList.map(function(toastEl) {
+                return new bootstrap.Toast(toastEl).show();
+            });
+        {% endfor %}
+    {% endwith %}
+});
+</script>
+    
+{% endif %}
+{% endwith %}
