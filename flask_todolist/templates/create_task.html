@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}ChkounDone: Create New Task{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow  rounded">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Create New Task</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('create_task') }}" method="POST">
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Title -->
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control", placeholder="Task title") }}
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control", placeholder="Task description") }}
+                        </div>
+
+                        <!-- Dates -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.start_date.label(class="form-label") }}
+                                {{ form.start_date(class="form-control") }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.due_date.label(class="form-label") }}
+                                {{ form.due_date(class="form-control") }}
+                            </div>
+                        </div>
+
+                        <!-- Priority, Category, and Recurrence -->
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                {{ form.priority.label(class="form-label") }}
+                                {{ form.priority(class="form-select") }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                {{ form.category.label(class="form-label") }}
+                                {{ form.category(class="form-control") }}
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                {{ form.recurrence.label(class="form-label") }}
+                                {{ form.recurrence(class="form-select") }}
+                            </div>
+                        </div>
+
+                        <!-- Time Estimate, Attachments, Comments -->
+                        <div class="mb-3">
+                            {{ form.time_estimate.label(class="form-label") }}
+                            {{ form.time_estimate(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.attachments.label(class="form-label") }}
+                            {{ form.attachments(class="form-control", placeholder="Attachments links") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.comments.label(class="form-label") }}
+                            {{ form.comments(class="form-control", placeholder="Any comments?") }}
+                        </div>
+
+                        <!-- Status and Reminder Date -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.status.label(class="form-label") }}
+                                {{ form.status(class="form-select") }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.reminder_date.label(class="form-label") }}
+                                {{ form.reminder_date(class="form-control") }}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Create Task</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

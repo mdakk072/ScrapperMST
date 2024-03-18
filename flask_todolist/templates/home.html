@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}ChkounDone: Home{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<style>
+    .background-slideshow, .background-slideshow::before {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px);
+        z-index: -1;
+        transition: opacity 1s ease-in-out;
+    }
+    
+    .background-slideshow::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        z-index: -2;
+    }
+    
+
+    /* Overlay with a dark semi-transparent background */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.5); /* Adjust transparency as needed */
+        z-index: -1;
+    }
+
+    /* Ensure content is visually on top of the overlay */
+    .content-container {
+        position: relative;
+        z-index: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Background slideshow and overlay -->
+<div class="background-slideshow"></div>
+<div class="overlay"></div>
+<div class="container py-5 content-container">
+    <div class="text-center mb-5 text-shadow">
+        <h1 class="display-4 fw-bold text-white">Welcome to ChkounDone</h1>
+        <p class="lead text-white">Your ultimate task management solution. Organize, prioritize, and accomplish more every day.</p>
+        <hr class="my-4">
+        <p class="text-white">Get started now and transform your productivity!</p>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('my_todolist') }}" class="btn btn-outline-light btn-lg" role="button">View Your ToDo List</a>
+        {% else %}
+            <a href="{{ url_for('signup') }}" class="btn btn-outline-light btn-lg" role="button">Sign Up for Free</a>
+        {% endif %}
+    </div>
+    
+
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="feature-col col d-flex align-items-start">
+            <div class="icon-square bg-primary text-light me-3" style="padding: 20px;"><i class="bi bi-list-check fs-1"></i></div>
+            <div>
+                <h2 class="text-white">Manage Tasks Efficiently</h2>
+                <p class="text-white">With ChkounDone, tracking your daily tasks becomes a breeze. Add, edit, and delete tasks with just a few clicks.</p>
+            </div>
+        </div>
+        <div class="feature-col col d-flex align-items-start">
+            <div class="icon-square bg-warning text-dark me-3" style="padding: 20px;"><i class="bi bi-clock-fill fs-1"></i></div>
+            <div>
+                <h2 class="text-white">Stay on Schedule</h2>
+                <p class="text-white">Never miss a deadline again. Set due dates and reminders to keep everything on track.</p>
+            </div>
+        </div>
+        <div class="feature-col col d-flex align-items-start">
+            <div class="icon-square bg-success text-light me-3" style="padding: 20px;"><i class="bi bi-people-fill fs-1"></i></div>
+            <div>
+                <h2 class="text-white">Collaborate with Ease</h2>
+                <p class="text-white">Share tasks and collaborate with team members for enhanced productivity and better outcomes.</p>
+            </div>
+        </div>
+    </div>
+
+    <div data-aos="fade-up" data-aos-delay="200" class="text-white">
+        <h3 class="pb-2 border-bottom">Why ChkounDone?</h3>
+        <p>ChkounDone is designed to be intuitive, flexible, and user-friendly, catering to both personal and professional needs. Join the thousands of users who have revolutionized their approach to productivity.</p>
+    </div>
+</div>
+
+
+
+{% endblock %}
+{% block scripts %}
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+
+    const basePath = '{{ url_for("static", filename="") }}';
+    const backgroundImages = {{ background_images | tojson | safe }};
+    let currentBgIndex = 0;
+    const bgSlideshow = document.querySelector('.background-slideshow');
+
+    function changeBackground() {
+        const nextBgIndex = (currentBgIndex + 1) % backgroundImages.length;
+        const nextImageUrl = basePath + backgroundImages[nextBgIndex];
+
+        // Set the next image on the ::before pseudo-element
+        bgSlideshow.style.setProperty('--next-image', `url("${nextImageUrl}")`);
+
+        // Fade out the current image to show the next
+        bgSlideshow.style.opacity = '0';
+
+        setTimeout(() => {
+            // After the fade-out, set the next image as the main background
+            const imageUrl = basePath + backgroundImages[currentBgIndex];
+            bgSlideshow.style.backgroundImage = `url("${imageUrl}")`;
+
+            // Reset opacity to fade back in
+            bgSlideshow.style.opacity = '1';
+
+            // Prepare for next transition
+            currentBgIndex = nextBgIndex;
+
+            // Recursive call to change to the next background after some time
+            setTimeout(changeBackground, 5000); // Change image every 5 seconds
+        }, 700); // Fade transition time
+    }
+
+    changeBackground();
+</script>
+
+{% endblock %}

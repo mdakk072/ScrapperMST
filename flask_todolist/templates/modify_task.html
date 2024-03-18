@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Modify Task{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4"><i class="bi bi-pencil-square"></i> Modify Task</h1>
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}
+            
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-fonts"></i></span>
+                            {{ form.title.label(class="visually-hidden") }}
+                            {{ form.title(class="form-control", required=True, placeholder="Task Title") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-flag"></i></span>
+                            {{ form.priority.label(class="visually-hidden") }}
+                            {{ form.priority(class="form-select") }}
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            {{ form.start_date.label(class="visually-hidden") }}
+                            {{ form.start_date(class="form-control", placeholder="Start Date") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
+                            {{ form.due_date.label(class="visually-hidden") }}
+                            {{ form.due_date(class="form-control", placeholder="Due Date") }}
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-textarea-t"></i></span>
+                        {{ form.description.label(class="visually-hidden") }}
+                        {{ form.description(class="form-control", placeholder="Description") }}
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tags-fill"></i></span>
+                            {{ form.category.label(class="visually-hidden") }}
+                            {{ form.category(class="form-control", placeholder="Category") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-hourglass-split"></i></span>
+                            {{ form.time_estimate.label(class="visually-hidden") }}
+                            {{ form.time_estimate(class="form-control", placeholder="Time Estimate (minutes)") }}
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-repeat"></i></span>
+                            {{ form.recurrence.label(class="visually-hidden") }}
+                            {{ form.recurrence(class="form-select") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-exclamation-lg"></i></span>
+                            {{ form.status.label(class="visually-hidden") }}
+                            {{ form.status(class="form-select") }}
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-alarm"></i></span>
+                        {{ form.reminder_date.label(class="visually-hidden") }}
+                        {{ form.reminder_date(class="form-control", placeholder="Reminder Date") }}
+                    </div>
+                </div>
+            
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-paperclip"></i></span>
+                        {{ form.attachments.label(class="visually-hidden") }}
+                        {{ form.attachments(class="form-control", placeholder="Attachments") }}
+                    </div>
+                </div>
+            
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-chat-right-text"></i></span>
+                        {{ form.comments.label(class="visually-hidden") }}
+                        {{ form.comments(class="form-control", placeholder="Comments") }}
+                    </div>
+                </div>
+            
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary me-2"><i class="bi bi-save"></i> Save Changes</button>
+                    <a href="{{ url_for('my_todolist') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to List</a>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
