@@ -1,12 +1,35 @@
 {% extends 'base.html' %}
 
 {% block title %}ChkounDone: Create New Task{% endblock %}
+{% block styles %}
+{{ super() }}
+<style>
+  .todolist-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("{{ url_for('static', filename='background/bg7.webp') }}") no-repeat center center;
+    background-size: cover;
+    filter: blur(25px);
+    z-index: -1;
+  }
 
+
+  .todolist-form .bi {
+    width: 1.5em;
+    margin-right: 0.5em;
+  }
+</style>
+{% endblock %}
 {% block content %}
+<div class="todolist-background"></div>
+<div class="c66 ">
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow  rounded">
+            <div class="card shadow  rounded bg-transparent-black-45">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Create New Task</h4>
                 </div>
@@ -86,5 +109,7 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 {% endblock %}
