@@ -16,7 +16,7 @@
 {%endblock%}    
 <nav class="navbar navbar-expand-lg  m-2 rounded shadow bg-transparent-white-60">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('home') }}">
+        <a class="navbar-brand" href="{{ url_for('main.home') }}">
             <img src="{{ url_for('static', filename='logo.webp') }}" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;" alt="Logo">ChkounDone
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,14 +25,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('main.home') }}">Home</a>
                 </li>
                 {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('my_todolist') }}">My ToDo List</a>
+                        <a class="nav-link" href="{{ url_for('todolist.my_todolist') }}">My ToDo List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('account') }}">Account</a>
+                        <a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
                     </li>
                 {% endif %}
             </ul>
@@ -44,16 +44,16 @@
                             {{ current_user.username }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ url_for('account') }}">Account</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('users.account') }}">Account</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('users.logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                        <a class="nav-link" href="{{ url_for('users.signup') }}">Sign Up</a>
                     </li>
                 {% endif %}
             </ul>

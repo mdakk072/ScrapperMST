@@ -10,17 +10,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("{{ url_for('static', filename='background/bg6.webp') }}") no-repeat center center;
+    background: url("{{ url_for('static', filename='background/todolist.webp') }}") no-repeat center center;
     background-size: cover;
     filter: blur(10px);
     z-index: -1;
   }
 
-  .todolist-container {
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+
 
   .todolist-form .bi {
     width: 1.5em;
@@ -30,15 +26,13 @@
 {% endblock %}
 {% block content %}
 <div class="todolist-background"></div>
-<div class="c66 todolist-container">
-
     <div class="container mt-5 p-4 bg-transparent-white-75 rounded">
         <h2 class="mb-3"><i class="bi bi-list-check"></i> My To-Do List</h2>
         <div class="container">
             <div class="row mb-3 align-items-center">
                 <!-- Create New Task Button -->
                 <div class="col-12 col-md-auto mb-2 mb-md-0">
-                    <a href="{{ url_for('create_task') }}" class="btn btn-primary">
+                    <a href="{{ url_for('tasks.create_task') }}" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i> Create New Task
                     </a>
                 </div>
@@ -66,12 +60,13 @@
             </div>
         </div>
         
+    
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('applySort').addEventListener('click', function() {
                     const sortField = document.getElementById('sortField').value;
                     const sortDirection = document.getElementById('sortDirection').value;
-                    window.location.href = `{{ url_for('my_todolist') }}?sort_by=${sortField}&direction=${sortDirection}`;
+                    window.location.href = `{{ url_for('todolist.my_todolist') }}?sort_by=${sortField}&direction=${sortDirection}`;
                 });
             });
         </script>
@@ -89,7 +84,7 @@
         <ul class="pagination">
             {% if pagination.has_prev %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('my_todolist', page=pagination.prev_num) }}" aria-label="Previous">
+                    <a class="page-link" href="{{ url_for('todolist.my_todolist', page=pagination.prev_num) }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -102,7 +97,7 @@
             {% set end_page = pagination.page + window_size if pagination.page + window_size <= pagination.pages else pagination.pages %}
 
             {% if start_page > 1 %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('my_todolist', page=1) }}">1</a></li>
+                <li class="page-item"><a class="page-link" href="{{ url_for('todolist.my_todolist', page=1) }}">1</a></li>
                 {% if start_page > 2 %}
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                 {% endif %}
@@ -112,7 +107,7 @@
                 {% if page == pagination.page %}
                     <li class="page-item active"><span class="page-link">{{ page }}</span></li>
                 {% else %}
-                    <li class="page-item"><a class="page-link" href="{{ url_for('my_todolist', page=page) }}">{{ page }}</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ url_for('todolist.my_todolist', page=page) }}">{{ page }}</a></li>
                 {% endif %}
             {% endfor %}
 
@@ -120,12 +115,12 @@
                 {% if end_page < pagination.pages - 1 %}
                     <li class="page-item disabled"><span class="page-link">...</span></li>
                 {% endif %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('my_todolist', page=pagination.pages) }}">{{ pagination.pages }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{ url_for('todolist.my_todolist', page=pagination.pages) }}">{{ pagination.pages }}</a></li>
             {% endif %}
 
             {% if pagination.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('my_todolist', page=pagination.next_num) }}" aria-label="Next">
+                    <a class="page-link" href="{{ url_for('todolist.my_todolist', page=pagination.next_num) }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

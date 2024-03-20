@@ -12,7 +12,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: url("{{ url_for('static', filename='background/bg5.webp') }}") no-repeat center center fixed;
+        background: url("{{ url_for('static', filename='background/account.webp') }}") no-repeat center center fixed;
         background-size: cover;
         filter: blur(8px);
         z-index: -10; /* Lower the z-index even further if necessary */
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="col-md-8 ">
-            <form action="{{ url_for('account') }}" method="POST" id="accountForm" class="bg-transparent-black-75 p-4 rounded shadow">
+            <form action="{{ url_for('users.account') }}" method="POST" id="accountForm" class="bg-transparent-black-75 p-4 rounded shadow">
                 {{ form.hidden_tag() }}
                 <div class="mb-3">
                     {{ form.username.label(class="form-label") }}

@@ -20,7 +20,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: url("{{ url_for('static', filename='background/bg3.webp') }}") no-repeat center center fixed; 
+        background: url("{{ url_for('static', filename='background/home.webp') }}") no-repeat center center fixed; 
         background-size: cover;
         filter: blur(10px);
         z-index: -1;
@@ -54,9 +54,9 @@
         <hr class="my-4">
         <p class="text-white">Get started now and transform your productivity!</p>
         {% if current_user.is_authenticated %}
-            <a href="{{ url_for('my_todolist') }}" class="btn btn-outline-light btn-lg" role="button">View Your ToDo List</a>
+            <a href="{{ url_for('todolist.my_todolist') }}" class="btn btn-outline-light btn-lg" role="button">View Your ToDo List</a>
         {% else %}
-            <a href="{{ url_for('signup') }}" class="btn btn-outline-light btn-lg" role="button">Sign Up for Free</a>
+            <a href="{{ url_for('users.signup') }}" class="btn btn-outline-light btn-lg" role="button">Sign Up for Free</a>
         {% endif %}
     </div>
     

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}404 Not Found - ChkounDone{% endblock %}
+
+{% block styles %}
+<style>
+    .background-image-404 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url("{{ url_for('static', filename='background/404.webp') }}") no-repeat center center fixed;
+        background-size: cover;
+        filter: blur(15px);
+        z-index: -10;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="background-image-404"></div>
+<div class="text-center my-5 text-white">
+    <h1 class="display-1 fw-bold">404</h1>
+    <p class="h2">Oops! Page not found.</p>
+    <p class="lead">
+        We can't seem to find the page you're looking for.
+    </p>
+    <div class="mt-4">
+        <a href="{{ url_for('main.home') }}" class="btn btn-primary btn-lg">
+            <i class="bi bi-house-door-fill"></i> Take Me Home
+        </a>
+        <a href="{{ url_for('main.contact') }}" class="btn btn-outline-secondary btn-lg">
+            <i class="bi bi-envelope-fill"></i> Contact Support
+        </a>
+    </div>
+</div>
+{% endblock %}
