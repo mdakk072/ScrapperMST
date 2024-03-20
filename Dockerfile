@@ -1,20 +1,31 @@
-# Use an official Python runtime as a parent image
+# Base image
 FROM python:3.8-slim
 
-# Set the working directory in the container
+# Install dependencies
+RUN apt-get update && apt-get install -y nginx supervisor && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy the current directory contents into the container at /usr/src/app
+# Copy application code and other files
 COPY . .
 
-# Install any needed packages specified in requirements.txt
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 8000 available to the world outside this container
-EXPOSE 8000
+# Set up Gunicorn
+RUN chmod +x ./start-gunicorn.sh
 
-# Define environment variable
-ENV NAME World
+# Set up NGINX
+COPY nginx.conf /etc/nginx/sites-available/default
+# Remove the existing default configuration, then link your custom configuration
+RUN rm -f /etc/nginx/sites-enabled/default && ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled
 
-# Run app.py when the container launches using Gunicorn
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8000", "app:app"]
+# Set up Supervisord
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Expose port 80 for NGINX
+EXPOSE 80
+
+# Run Supervisord
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
