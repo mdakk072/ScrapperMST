@@ -1,0 +1,33 @@
+{% extends 'base/template.html' %}
+
+{% block title %}
+    Scraper Status Dashboard
+{% endblock %}
+
+{% block styles %}
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+    }
+    .scraper, .profile {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1>Scraper Status Dashboard</h1>
+    <div v-if="Object.keys(profiles).length">
+        <h2>Profiles</h2>
+        <template  v-for="(profile, key) in profiles" :key="key" class="profile">
+         {% include 'base/profile.html' %}
+
+        </template>
+
+    </div>
+{% endblock %}

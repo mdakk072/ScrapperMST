@@ -1,0 +1,46 @@
+<div v-for="scraper in getScrapersByProfile(key)" :key="scraper.unique_id" class="scraper border-primary card mb-3">
+    <div class="card-header bg-light text-dark d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <span class="badge rounded-pill me-2" :class="{'bg-success': scraper.monitoring_data.state === 'active', 'bg-warning': scraper.monitoring_data.state !== 'active'}">
+                [[ scraper.monitoring_data.state ]]
+            </span>
+            <h5 class="card-title mb-0">ID: [[ scraper.unique_id ]]</h5>
+        </div>
+        <button class="btn btn-link text-dark" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse' + scraper.unique_id" aria-expanded="false" aria-controls="collapseExample">
+            <i class="bi" :class="{'bi-caret-down-fill': !scraper.collapsed, 'bi-caret-up-fill': scraper.collapsed}"></i>
+        </button>
+    </div>
+    <div :id="'collapse' + scraper.unique_id" class="collapse">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="bi bi-geo-alt"></i> <strong>Address:</strong> [[ scraper.address ]]
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-clock-history"></i> <strong>Last Started:</strong> [[ formatDate(scraper.last_started) ]]
+                </li>
+                <li class="list-group-item">
+                    <h6 class="mt-3">Monitoring Data:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="bi bi-activity"></i> <strong>State:</strong> [[ scraper.monitoring_data.state ]]</li>
+                                <li class="list-group-item"><i class="bi bi-info-circle"></i> <strong>Status:</strong> [[ scraper.monitoring_data.status ]]</li>
+                                <li class="list-group-item"><i class="bi bi-clock"></i> <strong>Start Time:</strong> [[ formatDate(scraper.monitoring_data.start_time) ]]</li>
+                                <li class="list-group-item"><i class="bi bi-clock"></i> <strong>Last Updated:</strong> [[ formatDate(scraper.monitoring_data.last_updated) ]]</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="bi bi-hourglass-split"></i> <strong>Duration:</strong> [[ formatDuration(scraper.monitoring_data.duration) ]]</li>
+                                <li class="list-group-item"><i class="bi bi-graph-up"></i> <strong>Requests per Minute:</strong> [[ scraper.monitoring_data.requests_per_minute ]]</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle"></i> <strong>Successful Requests:</strong> [[ scraper.monitoring_data.successful_requests ]]</li>
+                                <li class="list-group-item"><i class="bi bi-x-circle"></i> <strong>Failed Requests:</strong> [[ scraper.monitoring_data.failed_requests ]]</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

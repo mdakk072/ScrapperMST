@@ -1,0 +1,29 @@
+<div class="card mb-4 shadow-sm border-primary">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h3 class="card-title mb-0">[[ key ]]</h3>
+        <span class="badge rounded-pill" :class="profile.running ? 'bg-success' : 'bg-danger'">
+            [[ profile.running ? 'Running' : 'Stopped' ]]
+        </span>
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <i class="bi bi-clock"></i> <strong>Interval:</strong> [[ profile.interval ]] minutes
+            </li>
+            <li class="list-group-item">
+                <i class="bi bi-calendar3"></i> <strong>Last Execution:</strong> [[ formatDate(profile.last_exec) ]]
+            </li>
+            <li class="list-group-item">
+                <i class="bi bi-file-earmark-text"></i> <strong>Config File:</strong> [[ profile.config_file ]]
+            </li>
+            <li class="list-group-item">
+                <i class="bi bi-wifi"></i> <strong>Publish Address:</strong> [[ profile.publish_address ]]
+            </li>
+        </ul>
+
+        <div v-if="getScrapersByProfile(key).length">
+            <h4 class="mt-4">Scrapers</h4>
+            {% include 'base/scraper.html' %}
+        </div>
+    </div>
+</div>
