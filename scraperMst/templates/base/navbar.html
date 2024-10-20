@@ -1,0 +1,107 @@
+{% set nav_items = [
+    {'url': url_for('main.home'), 'title': 'Home', 'icon': 'bi-house'},
+] %}
+
+{% set auth_items = [
+    {'url': url_for('users.login'), 'title': 'Login', 'icon': 'bi-box-arrow-in-right'},
+] %}
+
+{% block styles %}
+<style>
+    :root {
+        --navbar-bg-color: #0a2e52;
+        --navbar-text-color: #ffffff;
+        --navbar-hover-color: #17a2b8;
+        --navbar-active-color: #90e0ef;
+    }
+
+    @keyframes slideInFromTop {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(0); }
+    }
+
+    .navbar {
+        animation: slideInFromTop 0.5s ease-in-out;
+        background-color: var(--navbar-bg-color) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand, .nav-link {
+        color: var(--navbar-text-color) !important;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--navbar-hover-color) !important;
+    }
+
+    .nav-link.active {
+        color: var(--navbar-active-color) !important;
+        font-weight: bold;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    .dropdown-menu {
+        background-color: var(--navbar-bg-color);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .dropdown-item {
+        color: var(--navbar-text-color);
+    }
+
+    .dropdown-item:hover, .dropdown-item:focus {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--navbar-hover-color);
+    }
+</style>
+{% endblock %}
+
+<nav class="navbar navbar-expand-lg m-2 rounded">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('main.home') }}">
+            <img src="{{ url_for('static', filename='logo.webp') }}" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;" alt="Logo">
+            ScraperMST
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% for item in nav_items %}
+                    {% if not item.auth_required or (item.auth_required and current_user.is_authenticated) %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == item.url %}active{% endif %}" href="{{ item.url }}">
+                                <i class="bi {{ item.icon }} me-1"></i>{{ item.title }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ url_for('static', filename='profile_pics/' + (current_user.profile_image if current_user.profile_image else 'default.jpg')) }}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;" alt="User Image">
+                            {{ current_user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ url_for('users.logout') }}"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    {% for item in auth_items %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == item.url %}active{% endif %}" href="{{ item.url }}">
+                                <i class="bi {{ item.icon }} me-1"></i>{{ item.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block styles %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7 col-sm-9">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Login</h2>
+          <form action="{{ url_for('users.login') }}" method="post" class="login-form">
+            {{ form.hidden_tag() }}
+
+            <!-- Username Input -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text bg-light"><i class="bi bi-person-fill"></i></span>
+              {{ form.username.label(class="visually-hidden") }}
+              {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""), placeholder="Username") }}
+              {% for error in form.username.errors %}
+              <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-3 input-group">
+              <span class="input-group-text bg-light"><i class="bi bi-lock-fill"></i></span>
+              {{ form.password.label(class="visually-hidden") }}
+              {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else ""), placeholder="Password") }}
+              {% for error in form.password.errors %}
+              <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              {{ form.submit(class="btn btn-primary btn-block", value="Login") }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

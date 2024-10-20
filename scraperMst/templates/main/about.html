@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+
+{% block title %}About ScraperMST{% endblock %}
+
+{% block styles %}
+<style>
+
+    .quote-container {
+        font-family: Georgia, serif;
+        border-left: 5px solid #17a2b8; /* Adjusted to match navbar hover color */
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 5px;
+    }
+    .feature-icon {
+        font-size: 2rem;
+        color: #17a2b8;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="mb-4 text-center">About ScraperMST</h1>
+            <p class="lead">ScraperMST is a cutting-edge Maintenance and Monitoring Service Tool designed specifically for web scraping projects. Launched in 2024, our platform empowers developers and data scientists to efficiently manage, monitor, and maintain their scraping operations with ease.</p>
+
+            <div class="mt-5">
+                <h2>Key Features</h2>
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-speedometer2 feature-icon me-3"></i>
+                            <div>
+                                <h5>Real-time Monitoring</h5>
+                                <p>Track your scrapers' performance and status in real-time.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-gear feature-icon me-3"></i>
+                            <div>
+                                <h5>Easy Configuration</h5>
+                                <p>Set up and manage scraper configs with our intuitive interface.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-graph-up feature-icon me-3"></i>
+                            <div>
+                                <h5>Advanced Analytics</h5>
+                                <p>Gain insights into your scraping operations with detailed analytics.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-shield-check feature-icon me-3"></i>
+                            <div>
+                                <h5>Error Handling</h5>
+                                <p>Automated error detection and handling for reliable scraping.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5">
+                <h2>Our Commitment</h2>
+                <p>At ScraperMST, we're dedicated to continuous improvement and innovation. We understand the challenges of web scraping and are committed to providing solutions that evolve with the changing landscape of data collection.</p>
+
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+{% endblock %}

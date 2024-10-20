@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Scraper Status Dashboard{% endblock %}
+
+{% block content %}
+<div id="homeapp" class="container mt-5">
+    <!-- Title Area -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 text-primary">
+                <i class="bi bi-bar-chart-line"></i> Scraper Status Dashboard
+            </h1>
+            <p class="lead text-muted">
+                Monitor the status of your scrapers and profiles in real-time.
+            </p>
+        </div>
+    </div>
+
+    <!-- Profiles Section -->
+    <div v-if="Object.keys(profiles).length && !loading" class="row">
+        <div v-for="(profile, key) in profiles" :key="key" class="col-lg-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-truncate">[[ profile_name(profile) ]]</h5>
+                    <span class="badge" :class="profile.running ? 'bg-success' : 'bg-danger'">
+                        <i class="bi" :class="profile.running ? 'bi-play-fill' : 'bi-stop-fill'"></i>
+                        [[ profile.running ? 'Running' : 'Stopped' ]]
+                    </span>
+                </div>
+                <div class="card-body">
+                    <p><i class="bi bi-calendar"></i> <strong>Last Execution:</strong> [[ formatDate(profile.last_exec) ]]</p>
+                    <p><i class="bi bi-clock"></i> <strong>Interval:</strong> [[ profile.interval ]] min</p>
+                    <p><i class="bi bi-geo-alt"></i> <strong>Publish Address:</strong> [[ profile.publish_address ]]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scrapers Section -->
+    <div v-if="Object.keys(scrapers).length && !loading" class="row mt-4">
+        <h2 class="text-secondary mb-4 text-center">
+            <i class="bi bi-hammer"></i> Scrapers Monitoring
+        </h2>
+        <div v-for="(scraper, key) in scrapers" :key="key" class="col-lg-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-truncate">[[ scraper.profile_name ]]</h5>
+                    <span class="badge bg-primary">
+                        <i class="bi bi-info-circle"></i> [[ scraper.monitoring_data.state ]]
+                    </span>
+                </div>
+                <div class="card-body">
+                    <p><i class="bi bi-clock-history"></i> <strong>Last Started:</strong> [[ formatDate(scraper.last_started) ]]</p>
+                    <p><i class="bi bi-stopwatch"></i> <strong>Duration:</strong> [[ formatDuration(scraper.monitoring_data.duration) ]]</p>
+                    <p><i class="bi bi-list-check"></i> <strong>Requests:</strong> [[ scraper.monitoring_data.successful_requests ]] / [[ scraper.monitoring_data.num_requests ]]</p>
+                    <p><i class="bi bi-graph-up"></i> <strong>Requests/Minute:</strong> [[ scraper.monitoring_data.requests_per_minute ]]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Data Available -->
+    <div v-if="!Object.keys(profiles).length && !Object.keys(scrapers).length && !loading" class="col-lg-6 text-center">
+        <div class="card shadow-sm">
+            <div class="card-body py-5">
+                <h3 class="text-muted"><i class="bi bi-exclamation-triangle"></i> No Data Available</h3>
+                <p>Please check again later.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

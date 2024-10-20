@@ -1,0 +1,66 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="toastComponent" aria-live="polite" aria-atomic="true" class="position-fixed top-0 mt-5  end-0 p-4" style="z-index: 11;">
+    <div id="toast-container">
+        <!-- Vue.js will dynamically handle the rendering of toast messages -->
+        <div v-for="(message, index) in messages" :key="index" class="toast" :class="getToastClass(message.category)" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div :class="getToastClass(message.category) + ' toast-header'">
+                <strong class="me-auto">Message</strong> <!-- TODO : Add a title if needed -->
+                <button type="button" class="btn-close btn-close-white" @click="closeToast(index)" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                [[ message.text ]] <!-- Dynamically display the message content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endwith %}
+
+<script>
+    const { createApp } = Vue;
+
+    // Create the Vue instance
+    createApp({
+        delimiters: ['[[', ']]'],  // Use [[ ]] to avoid conflicts with Jinja2
+        data() {
+            return {
+                messages: [
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% for category, message in messages %}
+                        { category: "{{ category }}", text: "{{ message|safe }}" },
+                        {% endfor %}
+                    {% endwith %}
+                ]
+            }
+        },
+        methods: {
+            // Function to determine the Bootstrap class based on the message category
+            getToastClass(category) {
+                switch (category) {
+                    case 'success': return 'bg-success text-white';
+                    case 'danger': return 'bg-danger text-white';
+                    case 'warning': return 'bg-warning text-dark';
+                    case 'info': return 'bg-info text-white';
+                    default: return 'bg-primary text-white';
+                }
+            },
+            // Function to close and remove the toast message
+            closeToast(index) {
+                this.messages.splice(index, 1);  // Remove the message from the list
+            }
+        },
+        mounted() {
+            console.log('Vue app mounted!');
+            console.log(this.messages);  // Log the messages array to check if it's populated
+
+            // Automatically show the toasts after the component is mounted
+            let toastElList = document.querySelectorAll('.toast');
+            toastElList.forEach(function(toastEl) {
+                let toast = new bootstrap.Toast(toastEl);   // Create a new Toast instance
+                toast.show();  // Show each toast after Vue renders it
+            });
+        }
+    }).mount('#toastComponent');  // Mount the Vue instance to the #toastApp div
+</script>

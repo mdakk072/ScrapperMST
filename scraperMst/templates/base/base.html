@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScraperMST {% block title %}{% endblock %}</title>
+    <!-- Favicon and Fonts -->
+    <link rel="icon" href="{{ url_for('static', filename='icon.webp') }}" type="image/webp">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block styles %}{% endblock %}
+
+    <style>
+        /* CSS Variables for font, background, text color */
+        :root {
+            --font-family: 'Nunito Sans', sans-serif;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --footer-height: 60px; /* Height of the footer */
+        }
+
+        /* Full height body with flex layout */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: var(--font-family);
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Main content area */
+        main {
+            flex: 1;
+            padding-top: 20px; /* Space for navbar */
+            padding-bottom: var(--footer-height); /* Space for footer */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Include the Navbar -->
+    {% include 'base/navbar.html' %}
+    <!-- Main Content -->
+    <main role="main" class="container my-3">
+        {% block content %}{% endblock %}
+    </main>
+    <!-- Include the Footer -->
+    {% include 'base/footer.html' %}
+    <!-- JavaScript Includes -->
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script> <!-- Added Socket.IO client library -->
+     
+    <script src="{{ url_for('static', filename='includes/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='includes/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='includes/vue.global.prod.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+        {% include 'component/flash_message.html'%}
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
